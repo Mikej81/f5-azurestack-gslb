@@ -12,15 +12,15 @@
         },
         "authenticationType": {
             "allowedValues": [
-            "password",
-            "sshPublicKey"
+                "password",
+                "sshPublicKey"
             ],
             "defaultValue": "password",
             "metadata": {
-            "description": "Type of authentication to use on the Virtual Machine, password based authentication or key based authentication."
+                "description": "Type of authentication to use on the Virtual Machine, password based authentication or key based authentication."
             },
             "type": "string"
-            },
+        },
 
         "adminPasswordOrKey": {
             "metadata": {
@@ -105,7 +105,7 @@
             "type": "string"
         },
         "bigIpModules": {
-            "defaultValue": "ltm:nominal, gtm:nominal",
+            "defaultValue": "ltm:nominal,gtm:nominal",
             "metadata": {
                 "description": "Comma separated list of modules and levels to provision, for example, ltm:nominal,asm:nominal"
             },
@@ -351,75 +351,75 @@
             "location": "[variables('location')]",
             "name": "[variables('mgmtPublicIPAddressName')]",
             "properties": {
-            "dnsSettings": {
-            "domainNameLabel": "[parameters('virtualMachineName')]"
-            },
-            "idleTimeoutInMinutes": 30,
-            "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('virtualMachineName')]"
+                },
+                "idleTimeoutInMinutes": 30,
+                "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
             },
             "tags": "[if(empty(variables('tagValues')), json('null'), variables('tagValues'))]",
             "type": "Microsoft.Network/publicIPAddresses"
-            },
-            {
+        },
+        {
             "apiVersion": "[variables('networkApiVersion')]",
             "location": "[variables('location')]",
             "name": "[concat(variables('extSelfPublicIpAddressNamePrefix'), '0')]",
             "properties": {
-            "idleTimeoutInMinutes": 30,
-            "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
+                "idleTimeoutInMinutes": 30,
+                "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
             },
             "tags": "[if(empty(variables('tagValues')), json('null'), variables('tagValues'))]",
             "type": "Microsoft.Network/publicIPAddresses"
-            },
-            {
+        },
+        {
             "apiVersion": "[variables('networkApiVersion')]",
             "condition": "[not(equals(variables('numberOfExternalIps'), 0))]",
             "copy": {
-            "count": "[if(not(equals(variables('numberOfExternalIps'), 0)), variables('numberOfExternalIps'), 1)]",
-            "name": "extpipcopy"
+                "count": "[if(not(equals(variables('numberOfExternalIps'), 0)), variables('numberOfExternalIps'), 1)]",
+                "name": "extpipcopy"
             },
             "location": "[variables('location')]",
             "name": "[concat(variables('extPublicIPAddressNamePrefix'), copyIndex())]",
             "properties": {
-            "dnsSettings": {
-            "domainNameLabel": "[concat(parameters('virtualMachineName'), copyIndex(0))]"
-            },
-            "idleTimeoutInMinutes": 30,
-            "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
+                "dnsSettings": {
+                    "domainNameLabel": "[concat(parameters('virtualMachineName'), copyIndex(0))]"
+                },
+                "idleTimeoutInMinutes": 30,
+                "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
             },
             "tags": "[if(empty(variables('tagValues')), json('null'), variables('tagValues'))]",
             "type": "Microsoft.Network/publicIPAddresses"
-            },
-            {
-                "type": "Microsoft.Network/networkInterfaces",
-                "name": "[variables('mgmtNicName')]",
-                "apiVersion": "[variables('networkApiVersion')]",
-                "location": "[variables('location')]",
-                "properties": {
-                    "ipConfigurations": [
-                        {
-                            "name": "[concat(parameters('virtualMachineName'), '-ipconfig1')]",
-                            "properties": {
-                                "subnet": {
-                                    "id": "[variables('mgmtSubnetId')]"
-                                },
-                                "privateIPAllocationMethod": "Dynamic",
-                                "publicIpAddress": {
-                                    "id": "[variables('mgmtPublicIPAddressID')]"
-                                }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('mgmtNicName')]",
+            "apiVersion": "[variables('networkApiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "[concat(parameters('virtualMachineName'), '-ipconfig1')]",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('mgmtSubnetId')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIpAddress": {
+                                "id": "[variables('mgmtPublicIPAddressID')]"
                             }
                         }
-                    ],
-                    "networkSecurityGroup": {
-                        "id": "[variables('mgmtNsgId')]"
                     }
-                },
-                "dependsOn": [
-                    "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
-                    "[variables('mgmtPublicIPAddressID')]",
-                    "[variables('mgmtNsgId')]"
-                ]
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('mgmtNsgId')]"
+                }
             },
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+                "[variables('mgmtPublicIPAddressID')]",
+                "[variables('mgmtNsgId')]"
+            ]
+        },
         {
             "apiVersion": "[variables('networkApiVersion')]",
             "dependsOn": [
@@ -512,7 +512,8 @@
                             "storageAccountType": "Standard_LRS"
                         }
                     },
-                    "dataDisks": []
+                    "dataDisks": [
+                    ]
                 },
                 "networkProfile": {
                     "networkInterfaces": [
@@ -559,11 +560,63 @@
             "location": "[variables('location')]",
             "name": "[concat(parameters('virtualMachineName'), '-ext-nsg')]",
             "properties": {
-            "securityRules": []
+                "securityRules": [
+                    {
+                        "name": "GTM_443",
+                        "properties": {
+                            "priority": 300,
+                            "protocol": "Tcp",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceApplicationSecurityGroups": [
+                            ],
+                            "destinationApplicationSecurityGroups": [
+                            ],
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "443"
+                        }
+                    },
+                    {
+                        "name": "GTM_22",
+                        "properties": {
+                            "priority": 320,
+                            "protocol": "Tcp",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceApplicationSecurityGroups": [
+                            ],
+                            "destinationApplicationSecurityGroups": [
+                            ],
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "22"
+                        }
+                    },
+                    {
+                        "name": "GTM_4353",
+                        "properties": {
+                            "priority": 340,
+                            "protocol": "Tcp",
+                            "access": "Allow",
+                            "direction": "Inbound",
+                            "sourceApplicationSecurityGroups": [
+                            ],
+                            "destinationApplicationSecurityGroups": [
+                            ],
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRange": "4353"
+                        }
+                    }
+                ]
             },
             "tags": "[if(empty(variables('tagValues')), json('null'), variables('tagValues'))]",
             "type": "Microsoft.Network/networkSecurityGroups"
-            },
+        },
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[concat(parameters('virtualMachineName'), '-mgmt-nsg')]",
@@ -578,8 +631,10 @@
                             "protocol": "Tcp",
                             "access": "Allow",
                             "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
+                            "sourceApplicationSecurityGroups": [
+                            ],
+                            "destinationApplicationSecurityGroups": [
+                            ],
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*",
@@ -593,27 +648,14 @@
                             "protocol": "Tcp",
                             "access": "Allow",
                             "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
+                            "sourceApplicationSecurityGroups": [
+                            ],
+                            "destinationApplicationSecurityGroups": [
+                            ],
                             "sourceAddressPrefix": "*",
                             "sourcePortRange": "*",
                             "destinationAddressPrefix": "*",
                             "destinationPortRange": "22"
-                        }
-                    },
-                    {
-                        "name": "iQuery_4353",
-                        "properties": {
-                            "priority": 340,
-                            "protocol": "Tcp",
-                            "access": "Allow",
-                            "direction": "Inbound",
-                            "sourceApplicationSecurityGroups": [],
-                            "destinationApplicationSecurityGroups": [],
-                            "sourceAddressPrefix": "*",
-                            "sourcePortRange": "*",
-                            "destinationAddressPrefix": "*",
-                            "destinationPortRange": "4353"
                         }
                     }
                 ]
