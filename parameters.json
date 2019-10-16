@@ -1,0 +1,57 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachineName": {
+            "value": "f5stack1"
+        },
+        "adminUsername": {
+            "value": "xadmin"
+        },
+        "authenticationType": {
+            "value": "password"
+        },
+        "adminPasswordOrKey": {
+            "value": null
+        },
+        "virtualNetworkName": {
+            "value": "GSLB"
+        },
+        "instanceType": {
+            "value": "Standard_DS3_v2"
+        },
+        "bigIpVersion": {
+            "value": "14.1.200000"
+        },
+        "licenseKey1": {
+            "value": ""
+        },
+        "bigIpModules": {
+            "value": "ltm:nominal, gtm:nominal"
+        },
+        "declarationUrl": {
+            "value": "NOT_SPECIFIED"
+        },
+        "addressPrefix": {
+            "value": "10.10"
+        },
+        "ntpServer": {
+            "value": "0.pool.ntp.org"
+        },
+        "timeZone": {
+            "value": "UTC"
+        },
+        "allowUsageAnalytics": {
+            "value": "Yes"
+        },
+        "tagValues": {
+            "value": {
+                "application": "APP",
+                "cost": "COST",
+                "environment": "ENV",
+                "group": "GROUP",
+                "owner": "OWNER"
+            }
+        }
+    }
+}
