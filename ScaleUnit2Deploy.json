@@ -120,7 +120,7 @@
         },
         "addressPrefix": {
             "type": "string",
-            "defaultValue": "10.10"
+            "defaultValue": "10.11"
         },
         "ntpServer": {
             "defaultValue": "0.pool.ntp.org",
