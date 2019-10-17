@@ -435,7 +435,7 @@
                     {
                         "count": "[add(variables('numberOfExternalIps'), 1)]",
                         "input": {
-                            "name": "[if(equals(copyIndex('ipConfigurations', 1), 1), concat(parameters('virtualMachineName'), '-self-ipconfig'), concat(variables('resourceGroupName'), '-ext-ipconfig', sub(copyIndex('ipConfigurations', 1), 2)))]",
+                            "name": "[if(equals(copyIndex('ipConfigurations', 1), 1), concat(parameters('virtualMachineName'), '-self-ipconfig'), concat(parameters('virtualMachineName'), '-ext-ipconfig', sub(copyIndex('ipConfigurations', 1), 2)))]",
                             "properties": {
                                 "PublicIpAddress": {
                                     "Id": "[if(equals(copyIndex('ipConfigurations', 1), 1), concat(variables('extSelfPublicIpAddressIdPrefix'), '0'), concat(variables('extPublicIPAddressIdPrefix'), sub(copyIndex('ipConfigurations', 1), 2)))]"
@@ -453,7 +453,8 @@
                 ],
                 "networkSecurityGroup": {
                     "id": "[concat(variables('extNsgID'))]"
-                }
+                },
+                "enableIPForwarding": "true"
             },
             "tags": "[if(empty(variables('tagValues')), json('null'), variables('tagValues'))]",
             "type": "Microsoft.Network/networkInterfaces"
