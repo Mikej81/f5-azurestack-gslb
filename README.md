@@ -19,3 +19,14 @@ Templates developed to provide Global Service Load Balancing across Azure Stack 
 
 ## Troubleshooting
   * iQuery [https://support.f5.com/csp/article/K13690](https://support.f5.com/csp/article/K13690)
+
+## Support guide
+This project is community supported and not supported by [F5 Support][23].
+
+To report defects and security vulnerabilties, or submit enhancements and general questions open an issue within the GitHub repository.
+
+1. In the top-right corner, expand :heavy_plus_sign: **More**, and then select **New Issues** from the list.
+2. Enter a title, a description, and then click **Submit new issue**.
+
+## Contributor License Agreement
+Individuals or business entities who contribute to this project must have completed and submitted the F5 Contributor License Agreement.
