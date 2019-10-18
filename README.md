@@ -21,7 +21,7 @@ Templates developed to provide Global Service Load Balancing across Azure Stack 
   * iQuery [https://support.f5.com/csp/article/K13690](https://support.f5.com/csp/article/K13690)
 
 ## Support guide
-This project is community supported and not supported by [F5 Support][23].
+This project is community supported and not supported by F5 Support.
 
 To report defects and security vulnerabilties, or submit enhancements and general questions open an issue within the GitHub repository.
 
